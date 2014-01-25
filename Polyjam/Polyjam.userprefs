@@ -1,8 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/GenePanel/PanelBehaviour.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Panel/PanelBehaviour.cs">
     <Files>
-      <File FileName="Assets/GenePanel/PanelBehaviour.cs" Line="7" Column="2" />
+      <File FileName="Assets/Panel/PanelBehaviour.cs" Line="8" Column="22" />
+      <File FileName="Assets/Panel/MockStats.cs" Line="21" Column="13" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
