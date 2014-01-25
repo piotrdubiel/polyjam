@@ -19,15 +19,20 @@ public class PlayerAI : MonoBehaviour
 		numberOfUpgrades = 0;
 	}
 
-
+	public float points { get; set; }
 	public float health { get; set; }
 	public int numberOfUpgrades { get; set; }
+	public float speed { get; set; }
+	public float strength { get; set; }
+	public float plantDistance { get; set; }
+	public float maxHealth { get; set; }
 
 	public Vector3 moveDirection;
 	float timeToChangeMoveDirection;
-	float speed;
+	float timeBetweenAttacks = 1.0f;
+	float attackInitialIntercal = 1.0f;
 
-	float plantDistance;
+	float attackDistance = 1;
 	
 	float changeInterval = 5.0f;
 	
@@ -38,6 +43,8 @@ public class PlayerAI : MonoBehaviour
 		GameObject go = GameObject.Find("Tile Map");
 		if (go != null) terrain = go.GetComponent<PATileTerrain>();
 		plantDistance = 10;
+		strength = 1;
+		maxHealth = 100;
 	}
 	
 	// Update is called once per frame
@@ -68,9 +75,16 @@ public class PlayerAI : MonoBehaviour
 			nearestPlantDirection = nearestPlant.transform.localPosition - transform.localPosition;
 		}
 
-		if (nearestPlant != null && nearestPlantDirection.sqrMagnitude < plantDistance * plantDistance) {
+		float distanceToPlant = nearestPlantDirection.sqrMagnitude;
+		if (nearestPlant != null && distanceToPlant < plantDistance * plantDistance) {
 			timeToChangeMoveDirection = changeInterval;
 			moveDirection = nearestPlantDirection.normalized;
+
+			timeBetweenAttacks -= Time.deltaTime;
+			if (distanceToPlant < attackDistance && timeBetweenAttacks <= 0) {
+				timeBetweenAttacks = attackInitialIntercal;
+				nearestPlant.SendMessageUpwards("Attack", this.gameObject);
+			}
 		} else if (timeToChangeMoveDirection <= 0) {
 			changeMoveDirection();
 		} else if (transform.localPosition.x <= 0 || transform.localPosition.x >= terrain.width ||
@@ -79,6 +93,7 @@ public class PlayerAI : MonoBehaviour
 			moveDirection *= -1;
 			timeToChangeMoveDirection = changeInterval;
 		}
+
 	}
 
 	GameObject nearestPlantPosition() {
@@ -119,6 +134,16 @@ public class PlayerAI : MonoBehaviour
 	
 	void playerDead() {
 		Application.LoadLevel ("game over");
+	}
+
+	void killed(GameObject go) {
+		if (go.tag.Equals ("PlantBehaviour")) {
+			this.points += PlantBehaviour.Points;
+			this.health += PlantBehaviour.Food;
+			this.health = Mathf.Min(this.health, this.maxHealth);
+		} else if (go.tag.Equals ("MeatBehaviour")) {
+
+		}
 	}
 }
 

@@ -2,6 +2,9 @@
 
 public class MeatBehaviour : FoodBehaviour
 {
+	public static float Points { get; set; }
+	public static float Food { get; set; }
+
 	PATileTerrain terrain;
 	Vector3 moveDirection;
 	float timeToChangeMoveDirection;
@@ -10,8 +13,6 @@ public class MeatBehaviour : FoodBehaviour
 	float changeInterval = 5.0f;
 	// Use this for initialization
 	void Start () {
-		amountOfFood = 10;
-		pointsForEating = 10;
 		health = 5;
 		speed = 0.3f;
 		timeToChangeMoveDirection = changeInterval;
