@@ -2,28 +2,31 @@
 using System.Collections;
 
 public class PanelBehaviour : MonoBehaviour {
-	public GUITexture panel;
 
-	// Use this for initialization
-	void Start () {
-		transform.position = Vector3.zero;
-		transform.localScale = Vector3.zero;
-		panel.pixelInset = new Rect(0, 0, Screen.width / 2, Screen.height);
+	private Rect viewport;
+
+	void OnStart() {
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	void OnUpdate() {
+		}
+	void OnGUI() {
+		int padding = 10;
+		int button_width = (int) (camera.pixelWidth - 4 * padding) / 3;
 
-	void onGUI() {
-		GUI.Box (new Rect (0,0,100,50), "Top-left");
-		GUI.Box (new Rect (Screen.width - 100,0,100,50), "Top-right");
-		GUI.Box (new Rect (0,Screen.height - 50,100,50), "Bottom-left");
-		GUI.Box (new Rect (Screen.width - 100,Screen.height - 50,100,50), "Bottom-right");
-
-		if (GUI.Button (new Rect (10,10,150,100), "I am a button")) {
+		if (GUI.Button (new Rect (10, 10, button_width , 50), "Gene 1")) {
 			print ("You clicked the button!");
+
+		}
+
+		if (GUI.Button (new Rect (10 + button_width + 10, 10, button_width , 50), "Gene 2")) {
+			print ("You clicked the button!");
+
+		}
+
+		if (GUI.Button (new Rect (30 + 2 * button_width, 10, button_width , 50), "Gene 3")) {
+			print ("You clicked the button!");
+
 		}
 	}
+
 }
