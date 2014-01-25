@@ -51,7 +51,8 @@
      <Compile Include="Assets\PATileTerrain\Scripts\PATileTerrainChunk.cs" />
      <Compile Include="Assets\PATileTerrain\Scripts\PATileTerrainEdit.cs" />
      <Compile Include="Assets\PATileTerrainDemo\Scripts\InGameEditing.cs" />
-     <Compile Include="Assets\automove.cs" />
+     <Compile Include="Assets\PlayerAI.cs" />
+     <Compile Include="Assets\SpawnObjects.cs" />
      <None Include="Assets\readme.txt" />
      <None Include="Assets\PATileTerrainDemo\Tilesets\tileset1.txt" />
      <None Include="Assets\PATileTerrain\Shaders\PATileTerrainPreview.shader" />
