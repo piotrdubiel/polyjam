@@ -12,6 +12,8 @@ using System;
 
 public class PlayerAI : MonoBehaviour
 {
+	PATileTerrain terrain;
+
 	public PlayerAI() {
 		speed = 0.3f;
 	}
@@ -28,16 +30,19 @@ public class PlayerAI : MonoBehaviour
 	// Use this for initialization
 	void Start () {
 		direction = MoveDirection.Right;
+
+		GameObject go = GameObject.Find("Tile Map");
+		if (go != null) terrain = go.GetComponent<PATileTerrain>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		Vector3 position = transform.localPosition;
-		if (direction == MoveDirection.Right && position.x >= 64.0f) {
+		if (direction == MoveDirection.Right && position.x >= terrain.width) {
 			direction = MoveDirection.Up;
-		} else if (direction == MoveDirection.Up && position.z >= 64.0f) {
+		} else if (direction == MoveDirection.Up && position.z >= terrain.height) {
 			direction = MoveDirection.Left;
-		} else if (direction == MoveDirection.Left && position.x <= 0.0f) {
+		} else if (direction == MoveDirection.Left && position.x <= 0) {
 			direction = MoveDirection.Down;
 		} else if (direction == MoveDirection.Down && position.z <= 0) {
 			direction = MoveDirection.Right;
