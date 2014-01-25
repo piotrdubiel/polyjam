@@ -25,10 +25,13 @@ public class FoodBehaviour : MonoBehaviour
 		
 	}
 
-	void hit(GameObject go, float amount) {
-		health -= amount;
+
+	void Attack(GameObject go) {
+		PlayerAI player = go.GetComponent ("PlayerAI") as PlayerAI;
+		this.health -= player.strength;
 		if (health <= 0) {
-			go.SendMessage("foodDied", this);
+			go.SendMessageUpwards("killed", this.gameObject);
+			Destroy(this.gameObject);
 		}
 	}
 }

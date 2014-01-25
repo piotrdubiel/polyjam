@@ -24,9 +24,15 @@ public class PanelBehaviour : MonoBehaviour {
 	void OnUpdate() {
 	}
 
-	void OnGUI() {
+	PlayerAI getPlayerAI() {
+		GameObject player = GameObject.FindGameObjectWithTag ("Player");
+		PlayerAI ai = player.GetComponent ("PlayerAI") as PlayerAI;
+		return ai;
+	}
 
-		string score_content = "Mutation points: <b>" +score + "</b>";
+	void OnGUI() {
+		PlayerAI ai = this.getPlayerAI();
+		string score_content = "Mutation points: <b>" + ai.points + "</b>";
 
 		GUILayout.BeginArea (new Rect (padding * 2, padding, camera.pixelWidth, control_start));
 		GUILayout.Label (score_content, header_style);
@@ -61,8 +67,34 @@ public class PanelBehaviour : MonoBehaviour {
 
 	private void buyStat(string name) {
 		if (name.Equals ("fangs")) {
-			MockStats.fangs++;
+			int[] fangCost = new int[10] {22, 24, 30, 40, 70, 130, 260, 560, 1200, 2600};
+			int cost = fangCost[MockStats.fangs];
+			if (this.canUpgradeStatWithCost(cost)) {
+				PlayerAI ai = this.getPlayerAI();
+				ai.points -= cost;
+				++ai.numberOfUpgrades;
+				ai.meatDesire += 1;
+				SpawnObjects spawner = this.getSpawnObjects();
+				spawner.plantSpawnFactor -= 0.04f;
+				MeatBehaviour.Points += 100;
+				PlantBehaviour.Points -= 20;
+				MeatBehaviour.Food += 10;
+				MockStats.fangs++;
+			}
 		}
 	}
 
+	SpawnObjects getSpawnObjects() {
+		GameObject player = GameObject.FindGameObjectWithTag ("Tile Map");
+		SpawnObjects spawner = player.GetComponent ("SpawnObjects") as SpawnObjects;
+		return spawner;
+	}
+
+	bool canUpgradeStatWithCost (int cost) {
+		PlayerAI ai = this.getPlayerAI ();
+		if (ai.points >= cost) {
+			return true;
+		}
+		return false;
+	}
 }

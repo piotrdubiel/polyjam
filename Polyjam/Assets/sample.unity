@@ -87,7 +87,7 @@ GameObject:
   - 114: {fileID: 9152021}
   m_Layer: 0
   m_Name: Tile Map
-  m_TagString: Untagged
+  m_TagString: Tile Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,7 +102,7 @@ Transform:
   m_LocalPosition: {x: 30, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1955150781}
+  - {fileID: 606592258}
   - {fileID: 41265828}
   - {fileID: 485398777}
   - {fileID: 1384793621}
@@ -66830,7 +66830,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 41265824}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: .5, z: 0}
+  m_LocalPosition: {x: 32, y: .5, z: 32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 591642519}
@@ -66846,6 +66846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe5024343b1004a75bdc3477d261b06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveDirection: {x: 0, y: 0, z: 0}
 --- !u!1 &55602305
 GameObject:
   m_ObjectHideFlags: 9
@@ -69778,7 +69779,6 @@ GameObject:
   - 124: {fileID: 591642517}
   - 92: {fileID: 591642516}
   - 81: {fileID: 591642515}
-  - 114: {fileID: 591642520}
   m_Layer: 0
   m_Name: Bot camera
   m_TagString: Untagged
@@ -69847,17 +69847,51 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 41265828}
---- !u!114 &591642520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
+--- !u!1 &606592257
+GameObject:
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 591642514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8f2fb117023549b486dcb25581cffd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 606592258}
+  - 119: {fileID: 606592259}
+  m_Layer: 0
+  m_Name: PATileTerrainPreview
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &606592258
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 606592257}
+  m_LocalRotation: {x: -.707106829, y: 0, z: 0, w: .707106829}
+  m_LocalPosition: {x: -30, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9152018}
+--- !u!119 &606592259
+Projector:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 606592257}
+  m_Enabled: 0
+  serializedVersion: 2
+  m_NearClipPlane: -51
+  m_FarClipPlane: 51
+  m_FieldOfView: 60
+  m_AspectRatio: 1
+  m_Orthographic: 1
+  m_OrthographicSize: 2
+  m_Material: {fileID: 1114780019}
+  m_IgnoreLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &611655366
 GameObject:
   m_ObjectHideFlags: 9
@@ -72381,6 +72415,32 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1109269189}
   m_Mesh: {fileID: 4300000, guid: b13f3bbd938c6412f9fb4f16a13c41e0, type: 2}
+--- !u!21 &1114780019
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Hidden/PATileTerrainPreview
+  m_Shader: {fileID: 4800000, guid: 2d9f6e18e0865574aad5fdbac4ce38fb, type: 3}
+  m_ShaderKeywords: []
+  m_CustomRenderQueue: -1
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _Brush
+        second:
+          m_Texture: {fileID: 2800000, guid: d1f818cc4223189489857af4c575dc1b, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: .319999993, g: .360000014, b: .600000024, a: .0700000003}
 --- !u!1 &1130622025
 GameObject:
   m_ObjectHideFlags: 9
@@ -76949,77 +77009,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1926028537}
   m_Mesh: {fileID: 4300000, guid: 5393ad130b8d34f3eb0bacff6b5c6104, type: 2}
---- !u!21 &1928768957
-Material:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: Hidden/PATileTerrainPreview
-  m_Shader: {fileID: 4800000, guid: 2d9f6e18e0865574aad5fdbac4ce38fb, type: 3}
-  m_ShaderKeywords: []
-  m_CustomRenderQueue: -1
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _Brush
-        second:
-          m_Texture: {fileID: 2800000, guid: d1f818cc4223189489857af4c575dc1b, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: .319999993, g: .360000014, b: .600000024, a: .0700000003}
---- !u!1 &1955150780
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1955150781}
-  - 119: {fileID: 1955150782}
-  m_Layer: 0
-  m_Name: PATileTerrainPreview
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1955150781
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1955150780}
-  m_LocalRotation: {x: -.707106829, y: 0, z: 0, w: .707106829}
-  m_LocalPosition: {x: -30, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 9152018}
---- !u!119 &1955150782
-Projector:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1955150780}
-  m_Enabled: 0
-  serializedVersion: 2
-  m_NearClipPlane: -51
-  m_FarClipPlane: 51
-  m_FieldOfView: 60
-  m_AspectRatio: 1
-  m_Orthographic: 1
-  m_OrthographicSize: 2
-  m_Material: {fileID: 1928768957}
-  m_IgnoreLayers:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!1 &2016398742
 GameObject:
   m_ObjectHideFlags: 9

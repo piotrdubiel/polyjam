@@ -7,10 +7,10 @@ public class SpawnObjects : MonoBehaviour {
 
 	float initialTimeToSpawn = 1.0f;
 
-	float plantSpawnFactor = 0.2f;
-	float timeToSpawnPlant;
+	public float plantSpawnFactor { get; set; }
+	public float timeToSpawnPlant;
 
-	float meatSpawnFactor = 0.2f;
+	float meatSpawnFactor { get; set; }
 	float timeToSpawnMeat;
 	// Use this for initialization
 	void Start () {
@@ -18,6 +18,8 @@ public class SpawnObjects : MonoBehaviour {
 		timeToSpawnPlant = initialTimeToSpawn;
 		GameObject go = GameObject.Find("Tile Map");
 		if (go != null) terrain = go.GetComponent<PATileTerrain>();
+		plantSpawnFactor = 0.2f;
+		meatSpawnFactor = 0.2f;
 	}
 	
 	// Update is called once per frame

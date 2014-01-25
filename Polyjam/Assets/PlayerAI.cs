@@ -17,6 +17,14 @@ public class PlayerAI : MonoBehaviour
 		speed = 2.0f;
 		health = 100;
 		numberOfUpgrades = 0;
+		PlantBehaviour.Points = 65;
+		PlantBehaviour.Food = 5;
+		MeatBehaviour.Points = 110;
+		MeatBehaviour.Food = 10;
+		points = 100;
+
+		meatDesire = 0.1f;
+		plantDesire = 0.1f;
 	}
 
 	public float points { get; set; }
@@ -25,7 +33,10 @@ public class PlayerAI : MonoBehaviour
 	public float speed { get; set; }
 	public float strength { get; set; }
 	public float plantDistance { get; set; }
+	public float meatDistance {get; set;}
 	public float maxHealth { get; set; }
+	public float plantDesire {get; set;}
+	public float meatDesire { get; set; }
 
 	public Vector3 moveDirection;
 	float timeToChangeMoveDirection;
@@ -43,6 +54,7 @@ public class PlayerAI : MonoBehaviour
 		GameObject go = GameObject.Find("Tile Map");
 		if (go != null) terrain = go.GetComponent<PATileTerrain>();
 		plantDistance = 10;
+		meatDistance = 10;
 		strength = 1;
 		maxHealth = 100;
 	}
@@ -69,22 +81,33 @@ public class PlayerAI : MonoBehaviour
 			if (go != null) terrain = go.GetComponent<PATileTerrain>();
 		}
 
-		GameObject nearestPlant = this.nearestPlantPosition();
+		GameObject nearestPlant = this.nearestObjectWithTag("PlantBehaviour");
 		Vector3 nearestPlantDirection = new Vector3();
 		if (nearestPlant != null) {
 			nearestPlantDirection = nearestPlant.transform.localPosition - transform.localPosition;
+			nearestPlantDirection.y = 0;
 		}
 
+		GameObject nearestMeat = this.nearestObjectWithTag ("MeatBehaviour");
+		Vector3 nearestMeatDirection = new Vector3();
+		if (nearestMeat != null) {
+			nearestMeatDirection = nearestMeat.transform.localPosition - transform.localPosition;
+			nearestMeatDirection.y = 0;
+		}
+		
 		float distanceToPlant = nearestPlantDirection.sqrMagnitude;
-		if (nearestPlant != null && distanceToPlant < plantDistance * plantDistance) {
-			timeToChangeMoveDirection = changeInterval;
-			moveDirection = nearestPlantDirection.normalized;
+		float distanceToMeat = nearestMeatDirection.sqrMagnitude;
 
-			timeBetweenAttacks -= Time.deltaTime;
-			if (distanceToPlant < attackDistance && timeBetweenAttacks <= 0) {
-				timeBetweenAttacks = attackInitialIntercal;
-				nearestPlant.SendMessageUpwards("Attack", this.gameObject);
+		if (nearestMeat != null && nearestPlant != null) {
+			if (meatDesire >= plantDesire) {
+				this.attackObject(nearestMeat, nearestMeatDirection.normalized, distanceToMeat);
+			} else {
+				this.attackObject(nearestPlant, nearestPlantDirection.normalized, distanceToPlant);
 			}
+		} else if (nearestPlant != null && distanceToPlant < plantDistance * plantDistance) {
+			this.attackObject(nearestPlant, nearestPlantDirection.normalized, distanceToPlant);
+		} else if (nearestMeat != null && distanceToMeat < meatDistance * meatDistance) {
+			this.attackObject(nearestMeat, nearestMeatDirection.normalized, distanceToMeat);
 		} else if (timeToChangeMoveDirection <= 0) {
 			changeMoveDirection();
 		} else if (transform.localPosition.x <= 0 || transform.localPosition.x >= terrain.width ||
@@ -96,31 +119,34 @@ public class PlayerAI : MonoBehaviour
 
 	}
 
-	GameObject nearestPlantPosition() {
-		GameObject[] gos = GameObject.FindGameObjectsWithTag("PlantBehaviour");
+	GameObject nearestObjectWithTag(string name) {
+		GameObject[] gos = GameObject.FindGameObjectsWithTag(name);
 		GameObject nearestPlant = null;
-		bool shouldGoToNearestPlant = false;
 		foreach (GameObject go in gos) {
 			if (nearestPlant == null) {
 				nearestPlant = go;
-				Vector3 oldDistance = nearestPlant.transform.localPosition - transform.localPosition;
-				if (oldDistance.sqrMagnitude < plantDistance * plantDistance) {
-					shouldGoToNearestPlant = true;
-				}
 			} else {
 				Vector3 oldDistance = nearestPlant.transform.localPosition - transform.localPosition;
 				Vector3 newDistance = go.transform.localPosition - transform.localPosition;
 				if (newDistance.sqrMagnitude < oldDistance.sqrMagnitude) {
 					nearestPlant = go;
-					if (newDistance.sqrMagnitude < plantDistance * plantDistance) {
-						shouldGoToNearestPlant = true;
-					}
 				}
 			}
 		}
 		return nearestPlant;
 	}
 
+	void attackObject (GameObject go, Vector3 direction, float distance) {
+		timeToChangeMoveDirection = changeInterval;
+		moveDirection = direction;
+		
+		timeBetweenAttacks -= Time.deltaTime;
+		if (distance < attackDistance && timeBetweenAttacks <= 0) {
+			timeBetweenAttacks = attackInitialIntercal;
+			go.SendMessageUpwards ("Attack", this.gameObject);
+		}
+	}
+	
 	void changeMoveDirection() {
 		timeToChangeMoveDirection = changeInterval;
 		moveDirection = this.randomMoveDirection ();
@@ -142,7 +168,9 @@ public class PlayerAI : MonoBehaviour
 			this.health += PlantBehaviour.Food;
 			this.health = Mathf.Min(this.health, this.maxHealth);
 		} else if (go.tag.Equals ("MeatBehaviour")) {
-
+			this.points += MeatBehaviour.Points;
+			this.health += MeatBehaviour.Food;
+			this.health = Mathf.Min(this.health, this.maxHealth);
 		}
 	}
 }

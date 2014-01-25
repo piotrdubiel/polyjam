@@ -14,13 +14,4 @@ public class PlantBehaviour : FoodBehaviour {
 	void Update () {
 
 	}
-
-	void Attack(GameObject go) {
-		PlayerAI player = go.GetComponent ("PlayerAI") as PlayerAI;
-		this.health -= player.strength;
-		if (health <= 0) {
-			go.SendMessageUpwards("killed", this.gameObject);
-			Destroy(this.gameObject);
-		}
-	}
 }
