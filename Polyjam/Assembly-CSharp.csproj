@@ -46,6 +46,8 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\GameOverGUI.cs" />
+     <Compile Include="Assets\GoToGameOver.cs" />
      <Compile Include="Assets\PATileTerrain\Scripts\PATileTerrain.cs" />
      <Compile Include="Assets\PATileTerrain\Scripts\PATileTerrainChunk.cs" />
      <Compile Include="Assets\PATileTerrain\Scripts\PATileTerrainEdit.cs" />
