@@ -5,86 +5,64 @@ public class PanelBehaviour : MonoBehaviour {
 	private Rect viewport;
 
 	private int score = 0;
-	public GUISkin skin;
+	public Texture active_texture;
+	
+	public GUIStyle header_style;
+	public GUIStyle item_style;
+	
+	private int padding = 7;
 
-	private int button_width;
+	private int button_width = 25;
+	private int row_height = 35;
+
+	private int control_start = 60;
+
 	void OnStart() {
+
 	}
 
 	void OnUpdate() {
 	}
 
 	void OnGUI() {
-		GUI.skin = skin;
-		int padding = 10;
-		GUI.color = Color.black;
 
-		string score_content = "Mutation points: ";
+		string score_content = "Mutation points: <b>" +score + "</b>";
 
-
-		GUILayout.BeginVertical ();
-		GUILayout.BeginHorizontal ();
-		GUILayout.Label (score_content);
-		GUILayout.Label (score.ToString());
-		GUILayout.EndHorizontal ();
-
-		GUILayout.BeginArea (new Rect (padding, 2 * padding + 20, 90, camera.pixelHeight));
-		GUILayout.Label ("Kły");
-		GUILayout.Label ("Siekacze");
-		GUILayout.Label ("Nogi");
-		GUILayout.Label ("Ręce");
-		GUILayout.Label ("Oczy");
-		GUILayout.Label ("Wątroba");
-		GUILayout.Label ("Wątroba");
-		GUILayout.Label ("Wątroba");
+		GUILayout.BeginArea (new Rect (padding * 2, padding, camera.pixelWidth, control_start));
+		GUILayout.Label (score_content, header_style);
 		GUILayout.EndArea ();
 
-		GUILayout.BeginArea (new Rect (padding * 2 + 50, 2 * padding + 20, 40, camera.pixelHeight));
-		GUILayout.Label (MockStats.getCost("fangs").ToString());
-		GUILayout.Label (MockStats.getCost("incisors").ToString());
-		GUILayout.Label (MockStats.getCost("legs").ToString());
-		GUILayout.Label (MockStats.getCost("hands").ToString());
-		GUILayout.Label (MockStats.getCost("eyes").ToString());
-		GUILayout.Label (MockStats.getCost("liver").ToString());
-		GUILayout.Label (MockStats.getCost("fangs").ToString());
-		GUILayout.Label (MockStats.getCost("fangs").ToString());
-		GUILayout.EndArea ();
-
-		GUILayout.BeginArea (new Rect (padding * 3 + 120, 2 * padding + 20, camera.pixelWidth - 4 * padding - 120, camera.pixelHeight));
 		button_width = (int) (camera.pixelWidth - 4 * padding - 120) / 10 - 4;
-		createStat ("fangs");
-		createStat ("incisors");
-		createStat ("legs");
-		createStat ("hands");
-		createStat ("eyes");
-		createStat ("liver");
-		createStat ("liver");
-		createStat ("liver");
-		
-		GUILayout.EndArea ();
-		GUILayout.EndVertical ();
+		createStat (0, "fangs");
+		createStat (1, "incisors");
+		createStat (2, "hands");
+		createStat (3, "legs");
+		createStat (4, "brain");
+		createStat (5, "eyes");
+		createStat (6, "nose");
+		createStat (7, "liver");
 
-
-
+		GUI.DrawTexture(new Rect(padding, camera.pixelHeight - 80 - padding, 80, 80), active_texture);
 	}
 
-	private void createStat(string name) {
-		GUILayout.BeginHorizontal ();
-		for (int i = 0; i < MockStats.getStat(name); ++i) {
-			GUILayout.Button ("#", GUILayout.Width(button_width));	
+	private void createStat(int index, string name) {
+		int stat = MockStats.getStat (name.Normalize());
+		GUI.Label(new Rect(padding, control_start + index * row_height, 80, row_height), name, item_style);
+		for (int i = 0; i < stat; ++i) {
+			GUI.DrawTexture(new Rect(2 * padding + 80 + i * button_width, control_start + index * row_height, button_width, button_width), active_texture);
 		}
-		
-		if (GUILayout.Button ("+",  GUILayout.Width (button_width))) {
-			buyStat(name);
+		if (stat < 10) {
+			if (GUI.Button (new Rect (2 * padding + 83 + stat * button_width, control_start + index * row_height, button_width, button_width), "+")) {
+				buyStat (name);
+			}
 		}
-		for (int i = MockStats.getStat(name) + 1; i < 10; ++i) {
-			GUILayout.Button ("  ", GUILayout.Width(button_width));	
-		}
-		GUILayout.EndHorizontal ();
+		GUI.Label(new Rect(camera.pixelWidth - 60 - padding, control_start + index * row_height, 60, row_height), MockStats.getCost(name).ToString(), item_style);
 	}
 
 	private void buyStat(string name) {
-		print (name);
+		if (name.Equals ("fangs")) {
+			MockStats.fangs++;
+		}
 	}
 
 }
