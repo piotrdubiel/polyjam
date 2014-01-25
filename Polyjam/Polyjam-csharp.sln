@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 
 Project("{00AEEE68-123E-A121-C2EC-94FB15219565}") = "Polyjam", "Assembly-CSharp-vs.csproj", "{637B00AE-C666-F044-BBAD-91951B0203B4}"
 EndProject
+Project("{00AEEE68-123E-A121-C2EC-94FB15219565}") = "Polyjam", "Assembly-CSharp-Editor-vs.csproj", "{272BB001-CE40-0971-AFEE-9D88F3C3ACFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,11 +15,15 @@ Global
 		{637B00AE-C666-F044-BBAD-91951B0203B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{637B00AE-C666-F044-BBAD-91951B0203B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{637B00AE-C666-F044-BBAD-91951B0203B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{272BB001-CE40-0971-AFEE-9D88F3C3ACFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{272BB001-CE40-0971-AFEE-9D88F3C3ACFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{272BB001-CE40-0971-AFEE-9D88F3C3ACFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{272BB001-CE40-0971-AFEE-9D88F3C3ACFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-					GlobalSection(MonoDevelopProperties) = preSolution
+								GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1

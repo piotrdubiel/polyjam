@@ -47,6 +47,14 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\GenePanel\PanelBehaviour.cs" />
+     <Compile Include="Assets\PATileTerrain\Scripts\PATileTerrain.cs" />
+     <Compile Include="Assets\PATileTerrain\Scripts\PATileTerrainChunk.cs" />
+     <Compile Include="Assets\PATileTerrain\Scripts\PATileTerrainEdit.cs" />
+     <Compile Include="Assets\PATileTerrainDemo\Scripts\InGameEditing.cs" />
+     <None Include="Assets\readme.txt" />
+     <None Include="Assets\PATileTerrainDemo\Tilesets\tileset1.txt" />
+     <None Include="Assets\PATileTerrain\Shaders\PATileTerrainPreview.shader" />
+     <None Include="Assets\PATileTerrain\Shaders\PATileTerrainVertexColors.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

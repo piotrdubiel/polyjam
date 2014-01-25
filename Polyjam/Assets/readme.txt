@@ -1,0 +1,51 @@
+PATileTerrain.
+v1.04
+
+PATileterrain this is a terrain, based on the tiles. You can use it for games where you want to use tiles (like Warcraft 3 or others). 
+Edit the terrain can be right in the game, not only with Unity3D Editor  (for example, change the height).
+The terrain consists of several chunks (each chunk is a separate mesh). This allows you to use it with Occlusion Culling and create large maps (up to 1024).
+The number of tile types is limited only by the size of the texture for a specific platform.
+The editor has all the necessary features: edit/smoothing heights, loading height maps, edit vertex colors, painting, save/load tilesets for use in other maps and others...
+The core of the terrain - PATileTerrain.cs provides direct access to all functions that are used by the editor. You can use them for games of any genre.
+
+Editor and Terrain Features:
+- Edit/Smooth heights
+- Loading height maps
+- Edit vertex colors 
+- Painting
+- Chunk System
+- Map size can be up to 1024x1024
+- Simple embedded pathfinding 
+
+Documentation for using the editor can be found in the "Asset / PATileTerrain / Documentation/patileterrain.pdf".
+
+Version History:
+
+1.0
+------
+Initial release
+
+1.01
+------
+- improved performance vertex editing/smoothing
+- now when editing, the data changes only at the mesh. Previously there were two copies of the data. 
+If you use the terrain in the prefabs, the data could be different, and this led to bad consequences.
+- fixed exceptions that occur when you use the wrong materials
+
+1.02
+------
+- added a script that shows how to edit a terrain in the game
+- some fixes
+
+1.03
+------
+- fixed PATileTerrain.GetHeight(Vector3) 
+When the new version will be approved by the Unity team, will be available for update in Asset Store
+1.04
+------
+- fixed editing of rotated terrain
+
+Written in C#.
+Pozndyakov Anton
+panerox@gmail.com
+http://www.pans.ru
