@@ -68671,6 +68671,7 @@ GameObject:
   - 92: {fileID: 401881220}
   - 124: {fileID: 401881219}
   - 81: {fileID: 401881218}
+  - 114: {fileID: 401881223}
   m_Layer: 0
   m_Name: Game Camera
   m_TagString: MainCamera
@@ -68737,9 +68738,19 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1153719147}
+  m_Children: []
   m_Father: {fileID: 0}
+--- !u!114 &401881223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 401881217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 020e799c5c52140e6a2b4ec6b7151e04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &429974687
 GameObject:
   m_ObjectHideFlags: 9
@@ -72474,52 +72485,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1144066443}
   m_Mesh: {fileID: 4300000, guid: e7b8c1d5cb64b44729c30106a3bd9669, type: 2}
---- !u!1 &1153719144
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1153719147}
-  - 131: {fileID: 1153719146}
-  m_Layer: 0
-  m_Name: Panel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!131 &1153719146
-GUITexture:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1153719144}
-  m_Enabled: 1
-  m_Texture: {fileID: 2800000, guid: ba4fdb6e16cf04b72aa0968f2d01feec, type: 3}
-  m_Color: {r: .5, g: .5, b: .5, a: .5}
-  m_PixelInset:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
-  m_LeftBorder: 0
-  m_RightBorder: 0
-  m_TopBorder: 0
-  m_BottomBorder: 0
---- !u!4 &1153719147
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1153719144}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 10}
-  m_LocalScale: {x: 0, y: 0, z: 1}
-  m_Children: []
-  m_Father: {fileID: 401881222}
 --- !u!1 &1154698247
 GameObject:
   m_ObjectHideFlags: 9
