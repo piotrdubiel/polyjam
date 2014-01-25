@@ -54,6 +54,7 @@ public class SpawnObjects : MonoBehaviour {
 		go.transform.localPosition = new Vector3(Random.Range(0, terrain.width),
 		                                         0, Random.Range(0, terrain.height));
 		go.AddComponent (behaviour);
+		go.tag = behaviour;
 		print ("Spawn " + behaviour);
 	}
 }

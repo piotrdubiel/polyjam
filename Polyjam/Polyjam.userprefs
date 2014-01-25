@@ -1,9 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Panel/PanelBehaviour.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/MeatBehaviour.cs">
     <Files>
-      <File FileName="Assets/Panel/PanelBehaviour.cs" Line="8" Column="22" />
-      <File FileName="Assets/Panel/MockStats.cs" Line="21" Column="13" />
+      <File FileName="Assets/PlantBehaviour.cs" Line="10" Column="46" />
+      <File FileName="Assets/FoodBehaviour.cs" Line="20" Column="17" />
+      <File FileName="Assets/MeatBehaviour.cs" Line="16" Column="12" />
+      <File FileName="Assets/PlayerAI.cs" Line="11" Column="14" />
+      <File FileName="Assets/SpawnObjects.cs" Line="18" Column="41" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
