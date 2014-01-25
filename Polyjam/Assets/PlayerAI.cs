@@ -16,6 +16,8 @@ public class PlayerAI : MonoBehaviour
 
 	public PlayerAI() {
 		speed = 0.3f;
+		health = 100;
+		numberOfUpgrades = 0;
 	}
 
 	public enum MoveDirection {
@@ -24,9 +26,13 @@ public class PlayerAI : MonoBehaviour
 		Right,
 		Left
 	}
-			
+
+	public float health { get; set; }
+	public int numberOfUpgrades { get; set; }
+
 	public MoveDirection direction { get; set; }
 	public float speed { get; set; }
+
 	// Use this for initialization
 	void Start () {
 		direction = MoveDirection.Right;
@@ -37,6 +43,19 @@ public class PlayerAI : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
+		this.updateHealth();
+		this.movePlayer();
+	}
+
+	void updateHealth() {
+		health -= numberOfUpgrades * Time.deltaTime;
+		if (health <= 0) {
+			this.SendMessage ("playerDead");
+			return;
+		}
+	}
+	
+	void movePlayer() {
 		Vector3 position = transform.localPosition;
 		if (direction == MoveDirection.Right && position.x >= terrain.width) {
 			direction = MoveDirection.Up;
@@ -63,6 +82,10 @@ public class PlayerAI : MonoBehaviour
 			break;
 		}
 		transform.localPosition = position;
+	}
+
+	void playerDead() {
+		Application.LoadLevel ("game over");
 	}
 }
 
