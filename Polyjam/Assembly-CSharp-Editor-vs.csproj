@@ -50,7 +50,7 @@
      <None Include="Assets\readme.txt" />
      <None Include="Assets\PATileTerrainDemo\Tilesets\tileset1.txt" />
      <None Include="Assets\PATileTerrain\Shaders\PATileTerrainPreview.shader" />
-     <None Include="Assets\Panel\roboto\Apache License.txt" />
+     <None Include="Assets\roboto\Apache License.txt" />
      <None Include="Assets\PATileTerrain\Shaders\PATileTerrainVertexColors.shader" />
  <Reference Include="\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEditor.Graphs">
  <HintPath>\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEditor.Graphs.dll</HintPath>

@@ -50,19 +50,19 @@
      <Compile Include="Assets\GameOverGUI.cs" />
      <Compile Include="Assets\GoToGameOver.cs" />
      <Compile Include="Assets\MeatBehaviour.cs" />
+     <Compile Include="Assets\MockStats.cs" />
      <Compile Include="Assets\PATileTerrain\Scripts\PATileTerrain.cs" />
      <Compile Include="Assets\PATileTerrain\Scripts\PATileTerrainChunk.cs" />
      <Compile Include="Assets\PATileTerrain\Scripts\PATileTerrainEdit.cs" />
      <Compile Include="Assets\PATileTerrainDemo\Scripts\InGameEditing.cs" />
-     <Compile Include="Assets\Panel\MockStats.cs" />
-     <Compile Include="Assets\Panel\PanelBehaviour.cs" />
+     <Compile Include="Assets\PanelBehaviour.cs" />
      <Compile Include="Assets\PlantBehaviour.cs" />
      <Compile Include="Assets\PlayerAI.cs" />
      <Compile Include="Assets\SpawnObjects.cs" />
      <None Include="Assets\readme.txt" />
      <None Include="Assets\PATileTerrainDemo\Tilesets\tileset1.txt" />
      <None Include="Assets\PATileTerrain\Shaders\PATileTerrainPreview.shader" />
-     <None Include="Assets\Panel\roboto\Apache License.txt" />
+     <None Include="Assets\roboto\Apache License.txt" />
      <None Include="Assets\PATileTerrain\Shaders\PATileTerrainVertexColors.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

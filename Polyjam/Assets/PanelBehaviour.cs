@@ -50,12 +50,12 @@ public class PanelBehaviour : MonoBehaviour {
 		createStat (7, "liver");
 
 		GUI.DrawTexture(new Rect(padding, camera.pixelHeight - 80 - padding, 80, 80), activeTexture);
-		GUI.DrawTexture(new Rect(camera.pixelWidth - 80 - padding, camera.pixelHeight - 80 - padding, 80, 80), healthTextures[health]);
+		GUI.DrawTexture(new Rect(camera.pixelWidth - 80 - padding, camera.pixelHeight - 80 - padding, 80, 80), updateHealthTexture());
 	}
 
 	private void createStat(int index, string name) {
-		int stat = MockStats.getStat (name.Normalize());
-		GUI.Label(new Rect(padding, control_start + index * row_height, 80, row_height), name, item_style);
+		int stat = MockStats.getStat (name);
+		GUI.Label(new Rect(padding, control_start + index * row_height, 80, row_height), name.Normalize(), item_style);
 		for (int i = 0; i < stat; ++i) {
 			GUI.DrawTexture(new Rect(2 * padding + 80 + i * button_width, control_start + index * row_height, button_width, button_width), activeTexture);
 		}
@@ -73,18 +73,18 @@ public class PanelBehaviour : MonoBehaviour {
 			PlayerAI ai = this.getPlayerAI();
 			ai.points -= cost;
 			++ai.numberOfUpgrades;
-			SpawnObjects spawner = this.getSpawnObjects();
+			//SpawnObjects spawner = this.getSpawnObjects();
 
 			if (name.Equals ("fangs")) {
 				ai.meatDesire += 1;
-				spawner.plantSpawnFactor -= 0.04f;
+				//spawner.plantSpawnFactor -= 0.04f;
 				MeatBehaviour.Points += 100;
 				PlantBehaviour.Points -= 20;
 				MeatBehaviour.Food += 10;
 				MockStats.fangs++;
 			} else if (name.Equals("incisors")) {
 				ai.plantDesire += 1;
-				spawner.meatSpawnFactor -= 0.04f;
+				//spawner.meatSpawnFactor -= 0.04f;
 				PlantBehaviour.Points += 100;
 				MeatBehaviour.Points -= 20;
 				PlantBehaviour.Food += 6;
@@ -104,8 +104,8 @@ public class PanelBehaviour : MonoBehaviour {
 			} else if (name.Equals("brain")) {
 				ai.maxHealth += 120;
 				ai.health += 120;
-				spawner.meatSpawnFactor += 0.1f;
-				spawner.plantSpawnFactor += 0.1f;
+				//spawner.meatSpawnFactor += 0.1f;
+				//spawner.plantSpawnFactor += 0.1f;
 				MockStats.brain++;
 			} else if (name.Equals("eyes")) {
 				ai.maxHealth += 40;
@@ -122,7 +122,9 @@ public class PanelBehaviour : MonoBehaviour {
 			} else if (name.Equals("liver")) {
 				MockStats.liver++;
 			}
-
+			
+			updateHealth(ai.health);
+			print ("Stat: " + MockStats.getStat(name));
 		}
 	}
 
@@ -140,8 +142,14 @@ public class PanelBehaviour : MonoBehaviour {
 		return false;
 	}
 
-	void updateHealth(float health) {
-		print ("update Health " + health);
-		this.health = (int) health / (healthTextures.Length - 1);
+	void updateHealth(float h) {
+		this.health = (int)(h * (healthTextures.Length - 1));
+	}
+
+	Texture updateHealthTexture() {
+		if (health >= 0 && health < healthTextures.Length) {
+			return healthTextures [health];
+		}
+		return healthTextures[healthTextures.Length-1];
 	}
 }
