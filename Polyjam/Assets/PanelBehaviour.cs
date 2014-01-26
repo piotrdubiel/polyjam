@@ -114,14 +114,14 @@ public class PanelBehaviour : MonoBehaviour {
 				ai.maxHealth += 80;
 				ai.health += 80;
 				ai.strength += 2;
-				ai.speed -= 0.2f;
+				ai.speed -= 0.015f;
 				MockStats.hands++;
 				handSprite.sprite = Resources.Load<Sprite>("Player/hand" + MockStats.hands);
 			} else if (name.Equals("legs")) {
 				ai.maxHealth += 80;
 				ai.health += 80;
 				ai.strength -= 0.2f;
-				ai.speed += 1.0f;
+				ai.speed += 0.03f;
 				MockStats.legs++;
 				legsSprite.sprite = Resources.Load<Sprite>("Player/legs" + MockStats.legs);
 			} else if (name.Equals("brain")) {

@@ -29,7 +29,7 @@ public class PlayerAI : MonoBehaviour
 		PlantBehaviour.Food = 5;
 		MeatBehaviour.Points = 110;
 		MeatBehaviour.Food = 10;
-		points = 100000;
+		points = 100;
 
 		meatDesire = 0.0f;
 		plantDesire = 0.0f;
