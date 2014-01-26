@@ -65,6 +65,9 @@ public class PanelBehaviour : MonoBehaviour {
 		GUI.Label (new Rect(padding, camera.pixelHeight - 150 - padding, 80, 40), "Meat: " + ai.meatDesire);
 		GUI.Label (new Rect(padding, camera.pixelHeight - 150 - padding - padding - 40, 80, 40), "Plant: " + ai.plantDesire);
 		GUI.Label (new Rect(padding, camera.pixelHeight - 150 - padding - (padding + 40)*2, 80, 40), "Alc: " + ai.alcoholDesire);
+		GUI.Label (new Rect(padding, camera.pixelHeight - 120 - padding, 80, 40), "Helath: " + ai.health + "/" + ai.maxHealth);
+		GUI.Label (new Rect(padding, camera.pixelHeight - 90 - padding, 80, 40), "Poison: " + ai.poisoning);
+
 		GUI.DrawTexture(new Rect(camera.pixelWidth - 80 - padding, camera.pixelHeight - 80 - padding, 80, 80), updateHealthTexture());
 	}
 
@@ -92,14 +95,14 @@ public class PanelBehaviour : MonoBehaviour {
 			++ai.numberOfUpgrades;
 			SpawnObjects spawner = this.getSpawnObjects();
 			MeatBehaviour.SightDistance *= 1.08f;
-			MeatBehaviour.Speed *= 1.05f;
-			MeatBehaviour.Strength *= 1.25f;
+			MeatBehaviour.Speed *= 1.1f;
+			MeatBehaviour.Strength *= 1.3f;
 			if (name.Equals ("fangs")) {
 				ai.meatDesire += 1;
 				spawner.plantSpawnFactor -= 0.008f;
-				MeatBehaviour.Points += 20;
+				MeatBehaviour.Points += 30;
 				PlantBehaviour.Points -= 4;
-				MeatBehaviour.Food += 10;
+				MeatBehaviour.Food += 20;
 				MockStats.fangs++;
 				kielSprite.sprite = Resources.Load<Sprite>("Player/kiel" + MockStats.fangs);
 			} else if (name.Equals("incisors")) {
@@ -107,7 +110,7 @@ public class PanelBehaviour : MonoBehaviour {
 				spawner.meatSpawnFactor -= 0.008f;
 				PlantBehaviour.Points += 20;
 				MeatBehaviour.Points -= 4;
-				PlantBehaviour.Food += 8;
+				PlantBehaviour.Food += 14;
 				MockStats.incisors++;
 				siekaczSprite.sprite = Resources.Load<Sprite>("Player/siekacz" + MockStats.incisors);
 			} else if (name.Equals("hands")) {
@@ -148,10 +151,10 @@ public class PanelBehaviour : MonoBehaviour {
 			} else if (name.Equals("liver")) {
 				ai.maxHealth += 40;
 				ai.health += 40;
-				ai.plantDistance -= 1.5f;
-				ai.meatDistance -= 1.5f;
+				ai.plantDistance -= 3.5f;
+				ai.meatDistance -= 3.5f;
 				ai.alcoholTolerance += 30;
-				ai.alcoholDesire += 1.0f;
+				ai.alcoholDesire += 2.0f;
 				MockStats.liver++;
 				watrobaSprite.sprite = Resources.Load<Sprite>("Player/watroba" + MockStats.liver);
 			}

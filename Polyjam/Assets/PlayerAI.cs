@@ -70,7 +70,7 @@ public class PlayerAI : MonoBehaviour
 	float timeToChangeMoveDirection;
 	float timeBetweenAttacks = 1.0f;
 	float attackInitialIntercal = 1.0f;
-	float poisoning;
+	public float poisoning { get; set; }
 
 	float attackDistance = 1;
 	
