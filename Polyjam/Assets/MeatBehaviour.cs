@@ -37,6 +37,7 @@ public class MeatBehaviour : FoodBehaviour
 
 		PlayerAI ai = getPlayerAI ();
 		Vector3 direction = ai.transform.localPosition - transform.localPosition;
+		direction.y = 0;
 
 		if (direction.sqrMagnitude <= MeatBehaviour.SightDistance * MeatBehaviour.SightDistance) {
 			this.attackObject(ai.gameObject, direction.normalized, direction.sqrMagnitude);

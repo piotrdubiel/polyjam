@@ -17,7 +17,7 @@ public class AlcoholBehaviour : FoodBehaviour
 	// Use this for initialization
 	void Start () {
 		health = 0;
-		this.renderer.material.color = Color.yellow;
+		(this.GetComponent("SpriteRenderer") as SpriteRenderer).sprite = Resources.Load<Sprite> ("beer");
 	}
 	
 	// Update is called once per frame

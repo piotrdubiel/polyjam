@@ -61,8 +61,10 @@ public class PanelBehaviour : MonoBehaviour {
 		createStat (5, "eyes");
 		createStat (6, "nose");
 		createStat (7, "liver");
-
-		GUI.DrawTexture(new Rect(padding, camera.pixelHeight - 80 - padding, 80, 80), activeTexture);
+	
+		GUI.Label (new Rect(padding, camera.pixelHeight - 150 - padding, 80, 40), "Meat: " + ai.meatDesire);
+		GUI.Label (new Rect(padding, camera.pixelHeight - 150 - padding - padding - 40, 80, 40), "Plant: " + ai.plantDesire);
+		GUI.Label (new Rect(padding, camera.pixelHeight - 150 - padding - (padding + 40)*2, 80, 40), "Alc: " + ai.alcoholDesire);
 		GUI.DrawTexture(new Rect(camera.pixelWidth - 80 - padding, camera.pixelHeight - 80 - padding, 80, 80), updateHealthTexture());
 	}
 
