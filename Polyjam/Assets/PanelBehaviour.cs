@@ -83,10 +83,10 @@ public class PanelBehaviour : MonoBehaviour {
 			PlayerAI ai = this.getPlayerAI();
 			ai.points -= cost;
 			++ai.numberOfUpgrades;
-			//SpawnObjects spawner = this.getSpawnObjects();
+			SpawnObjects spawner = this.getSpawnObjects();
 			if (name.Equals ("fangs")) {
 				ai.meatDesire += 1;
-				//spawner.plantSpawnFactor -= 0.04f;
+				spawner.plantSpawnFactor -= 0.04f;
 				MeatBehaviour.Points += 100;
 				PlantBehaviour.Points -= 20;
 				MeatBehaviour.Food += 10;
@@ -94,7 +94,7 @@ public class PanelBehaviour : MonoBehaviour {
 				kielSprite.sprite = Resources.Load<Sprite>("Player/kiel" + MockStats.fangs);
 			} else if (name.Equals("incisors")) {
 				ai.plantDesire += 1;
-				//spawner.meatSpawnFactor -= 0.04f;
+				spawner.meatSpawnFactor -= 0.04f;
 				PlantBehaviour.Points += 100;
 				MeatBehaviour.Points -= 20;
 				PlantBehaviour.Food += 6;
@@ -117,8 +117,8 @@ public class PanelBehaviour : MonoBehaviour {
 			} else if (name.Equals("brain")) {
 				ai.maxHealth += 120;
 				ai.health += 120;
-				//spawner.meatSpawnFactor += 0.1f;
-				//spawner.plantSpawnFactor += 0.1f;
+				spawner.meatSpawnFactor += 0.1f;
+				spawner.plantSpawnFactor += 0.1f;
 				MockStats.brain++;
 				brainSprite.sprite = Resources.Load<Sprite>("Player/brain" + MockStats.brain);
 			} else if (name.Equals("eyes")) {
