@@ -6,12 +6,18 @@ public class SpawnObjects : MonoBehaviour {
 	PATileTerrain terrain;
 
 	float initialTimeToSpawn = 1.0f;
+	float _plantSpawnFactor;
+	float _meatSpawnFactor;
+	float _alcoholSpawnFactor;
 
-	public float plantSpawnFactor { get; set; }
+	public float plantSpawnFactor { get {return _plantSpawnFactor;} set{_plantSpawnFactor = Mathf.Max(0, _plantSpawnFactor);} }
 	float timeToSpawnPlant;
 
-	public float meatSpawnFactor { get; set; }
+	public float meatSpawnFactor { get {return _meatSpawnFactor;} set{_meatSpawnFactor = Mathf.Max(0, _meatSpawnFactor);} }
 	float timeToSpawnMeat;
+
+	public float alcoholSpawnFactor { get {return _alcoholSpawnFactor;} set{_alcoholSpawnFactor = Mathf.Max(0, _alcoholSpawnFactor);} }
+	float timeToSpawnAlcohol;
 	// Use this for initialization
 	void Start () {
 		MeatBehaviour.InitialHealth = 5;
@@ -20,10 +26,12 @@ public class SpawnObjects : MonoBehaviour {
 		MeatBehaviour.SightDistance = 10;
 		timeToSpawnMeat = initialTimeToSpawn;
 		timeToSpawnPlant = initialTimeToSpawn;
+		_alcoholSpawnFactor = initialTimeToSpawn;
 		GameObject go = GameObject.Find("Tile Map");
 		if (go != null) terrain = go.GetComponent<PATileTerrain>();
-		plantSpawnFactor = 0.0f;
-		meatSpawnFactor = 0.0f;
+		plantSpawnFactor = 0.2f;
+		meatSpawnFactor = 0.2f;
+		alcoholSpawnFactor = 0.08f;
 	}
 	
 	// Update is called once per frame
