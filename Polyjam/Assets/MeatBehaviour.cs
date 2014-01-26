@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class MeatBehaviour : FoodBehaviour
 {
@@ -22,8 +22,8 @@ public class MeatBehaviour : FoodBehaviour
 		
 		GameObject go = GameObject.Find("Tile Map");
 		if (go != null) terrain = go.GetComponent<PATileTerrain>();
-		this.renderer.material.color = Color.red;
 		timeBetweenAttacks = 0.0f;
+		(this.GetComponent("SpriteRenderer") as SpriteRenderer).sprite = Resources.Load<Sprite> ("worm");
 	}
 	
 	// Update is called once per frame
