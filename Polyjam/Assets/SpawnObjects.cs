@@ -63,10 +63,13 @@ public class SpawnObjects : MonoBehaviour {
 	}
 
 	void spawnObjectWithBehaviour(string behaviour) {
-		GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
+		GameObject go = new GameObject ();
+		go.transform.Rotate (Vector3.left, -90.0f);
+		go.transform.localScale += new Vector3(1.0f, 1.0f, 1.0f);
+		go.AddComponent ("SpriteRenderer");
 		go.transform.parent = transform;
 		go.transform.localPosition = new Vector3(Random.Range(0, terrain.width),
-		                                         0, Random.Range(0, terrain.height));
+		                                         1, Random.Range(0, terrain.height));
 		go.AddComponent (behaviour);
 		go.tag = behaviour;
 		print ("Spawn " + behaviour);

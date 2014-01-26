@@ -8,7 +8,7 @@ public class PlantBehaviour : FoodBehaviour {
 	// Use this for initialization
 	void Start () {
 		health = 3;
-		this.renderer.material.color = Color.green;
+		(this.GetComponent("SpriteRenderer") as SpriteRenderer).sprite = Resources.Load<Sprite> ("plant");
 	}
 	
 	// Update is called once per frame

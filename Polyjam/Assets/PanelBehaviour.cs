@@ -44,6 +44,11 @@ public class PanelBehaviour : MonoBehaviour {
 		PlayerAI ai = this.getPlayerAI();
 		string score_content = "Mutation points: <b>" + ai.points + "</b>";
 
+		button_width = (int) (camera.pixelWidth - 83 - 4 * padding - 60) / 10;
+		if (button_width > 25) {
+			button_width = 25;
+		}
+
 		GUILayout.BeginArea (new Rect (padding * 2, padding, camera.pixelWidth, control_start));
 		GUILayout.Label (score_content, header_style);
 		GUILayout.EndArea ();
