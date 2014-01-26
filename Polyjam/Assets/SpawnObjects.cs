@@ -21,7 +21,7 @@ public class SpawnObjects : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		MeatBehaviour.InitialHealth = 5;
-		MeatBehaviour.Speed = 2;
+		MeatBehaviour.Speed = 1;
 		MeatBehaviour.Strength = 1;
 		MeatBehaviour.SightDistance = 10;
 		timeToSpawnMeat = initialTimeToSpawn;
@@ -29,8 +29,8 @@ public class SpawnObjects : MonoBehaviour {
 		timeToSpawnAlcohol = initialTimeToSpawn;
 		GameObject go = GameObject.Find("Tile Map");
 		if (go != null) terrain = go.GetComponent<PATileTerrain>();
-		plantSpawnFactor = 0.2f;
-		meatSpawnFactor = 0.2f;
+		plantSpawnFactor = 0.4f;
+		meatSpawnFactor = 0.4f;
 		alcoholSpawnFactor = 0.08f;
 	}
 	

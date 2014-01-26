@@ -23,11 +23,11 @@ public class PlayerAI : MonoBehaviour
 	}
 
 	public PlayerAI() {
-		speed = 2.0f;
+		speed = 0.5f;
 		numberOfUpgrades = 0;
-		PlantBehaviour.Points = 65;
+		PlantBehaviour.Points = 20;
 		PlantBehaviour.Food = 5;
-		MeatBehaviour.Points = 110;
+		MeatBehaviour.Points = 20;
 		MeatBehaviour.Food = 10;
 		points = 100;
 
@@ -87,8 +87,8 @@ public class PlayerAI : MonoBehaviour
 
 		GameObject go = GameObject.Find("Tile Map");
 		if (go != null) terrain = go.GetComponent<PATileTerrain>();
-		plantDistance = 10;
-		meatDistance = 10;
+		plantDistance = 2;
+		meatDistance = 2;
 		strength = 0;
 		maxHealth = 100;
 		health = 100;
