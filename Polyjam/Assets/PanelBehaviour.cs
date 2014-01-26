@@ -72,7 +72,9 @@ public class PanelBehaviour : MonoBehaviour {
 				buyStat (name);
 			}
 		}
-		GUI.Label(new Rect(camera.pixelWidth - 60 - padding, control_start + index * row_height, 60, row_height), MockStats.getCost(name).ToString(), item_style);
+		if (MockStats.getStat(name) < 10) {
+			GUI.Label(new Rect(camera.pixelWidth - 60 - padding, control_start + index * row_height, 60, row_height), MockStats.getCost(name).ToString(), item_style);
+		}
 	}
 
 	private void buyStat(string name) {
