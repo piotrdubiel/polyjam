@@ -77,7 +77,7 @@ public class PlayerAI : MonoBehaviour
 	}
 
 	void updateHealth() {
-		health -= numberOfUpgrades * Time.deltaTime;
+		health -= 0.05f + numberOfUpgrades * Time.deltaTime;
 		panel.SendMessage ("updateHealth", health / maxHealth);
 		if (health <= 0) {
 			this.SendMessage ("playerDead");
