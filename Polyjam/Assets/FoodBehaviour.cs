@@ -29,7 +29,7 @@ public class FoodBehaviour : MonoBehaviour
 	void Attack(GameObject go) {
 		PlayerAI player = go.GetComponent ("PlayerAI") as PlayerAI;
 		this.health -= player.strength;
-		if (health <= 0) {
+		if (health <= 0.1) {
 			go.SendMessageUpwards("killed", this.gameObject);
 			Destroy(this.gameObject);
 		}

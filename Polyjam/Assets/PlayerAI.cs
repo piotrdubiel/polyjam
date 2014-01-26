@@ -107,8 +107,11 @@ public class PlayerAI : MonoBehaviour
 	}
 
 	void updateHealth() {
-		health -= (0.05f + numberOfUpgrades * Time.deltaTime + Mathf.Max(0.0f, poisoning - alcoholTolerance) * poisoningToHealth);
-		poisoning -= poisoningFall;
+		float poison = Mathf.Max (0.0f, poisoning - alcoholTolerance) * poisoningToHealth * 0.01f;
+		print ("poison " + poison);
+		health -= (0.05f + numberOfUpgrades * Time.deltaTime + poison);
+		poisoning -= poisoningFall * Time.deltaTime;
+		poisoning = Mathf.Max (poisoning, 0);
 		panel.SendMessage ("updateHealth", health / maxHealth);
 		if (health <= 0) {
 			this.SendMessage ("playerDead");
@@ -127,10 +130,15 @@ public class PlayerAI : MonoBehaviour
 			timeToChangeMoveDirection -= Time.deltaTime;
 			if (timeToChangeMoveDirection <= 0) {
 				changeMoveDirection ();
-			} else if (transform.localPosition.x <= 0 || transform.localPosition.x >= terrain.width ||
-				transform.localPosition.z <= 0 || transform.localPosition.z >= terrain.height) {
-				moveDirection *= -1;
-				timeToChangeMoveDirection = changeInterval;
+			} else {
+				if (transform.localPosition.x <= 0 || transform.localPosition.x >= terrain.width) {
+					timeToChangeMoveDirection = changeInterval;
+					moveDirection.x *= -1;
+				}
+				if (transform.localPosition.z <= 0 || transform.localPosition.z >= terrain.height) {
+					timeToChangeMoveDirection = changeInterval;
+					moveDirection.z *= -1;
+				}
 			}
 			this.search();
 		} else {
@@ -244,7 +252,9 @@ public class PlayerAI : MonoBehaviour
 			this.points += MeatBehaviour.Points;
 			this.health += MeatBehaviour.Food;
 		} else if (go.tag.Equals ("AlcoholBehaviour")) {
+			print ("Alcohol");
 			poisoning += AlcoholBehaviour.PoisonAmount;
+
 		}
 		state = State.Searching;
 		target = null;

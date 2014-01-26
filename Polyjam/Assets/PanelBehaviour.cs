@@ -144,6 +144,12 @@ public class PanelBehaviour : MonoBehaviour {
 				MockStats.nose++;
 				noseSprite.sprite = Resources.Load<Sprite>("Player/nose" + MockStats.nose);
 			} else if (name.Equals("liver")) {
+				ai.maxHealth += 40;
+				ai.health += 40;
+				ai.plantDistance -= 1.5f;
+				ai.meatDistance -= 1.5f;
+				ai.alcoholTolerance += 30;
+				ai.alcoholDesire += 1.0f;
 				MockStats.liver++;
 				watrobaSprite.sprite = Resources.Load<Sprite>("Player/watroba" + MockStats.liver);
 			}

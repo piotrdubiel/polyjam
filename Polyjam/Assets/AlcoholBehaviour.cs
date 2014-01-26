@@ -11,7 +11,7 @@ using UnityEngine;
 public class AlcoholBehaviour : FoodBehaviour
 {
 	public static float StrengthFactor = 2.0f;
-	public static float SpeedFactor = 1.006f;
+	public static float SpeedFactor = 0.006f;
 	public static float PoisonAmount = 100.0f;
 
 	// Use this for initialization
