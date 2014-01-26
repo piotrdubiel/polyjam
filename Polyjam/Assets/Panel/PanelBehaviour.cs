@@ -66,21 +66,61 @@ public class PanelBehaviour : MonoBehaviour {
 	}
 
 	private void buyStat(string name) {
-		if (name.Equals ("fangs")) {
-			int[] fangCost = new int[10] {22, 24, 30, 40, 70, 130, 260, 560, 1200, 2600};
-			int cost = fangCost[MockStats.fangs];
-			if (this.canUpgradeStatWithCost(cost)) {
-				PlayerAI ai = this.getPlayerAI();
-				ai.points -= cost;
-				++ai.numberOfUpgrades;
+		int cost = MockStats.getCost (name);
+		if (this.canUpgradeStatWithCost (cost)) {
+			PlayerAI ai = this.getPlayerAI();
+			ai.points -= cost;
+			++ai.numberOfUpgrades;
+			SpawnObjects spawner = this.getSpawnObjects();
+
+			if (name.Equals ("fangs")) {
 				ai.meatDesire += 1;
-				SpawnObjects spawner = this.getSpawnObjects();
 				spawner.plantSpawnFactor -= 0.04f;
 				MeatBehaviour.Points += 100;
 				PlantBehaviour.Points -= 20;
 				MeatBehaviour.Food += 10;
 				MockStats.fangs++;
+			} else if (name.Equals("incisors")) {
+				ai.plantDesire += 1;
+				spawner.meatSpawnFactor -= 0.04f;
+				PlantBehaviour.Points += 100;
+				MeatBehaviour.Points -= 20;
+				PlantBehaviour.Food += 6;
+				MockStats.incisors++;
+			} else if (name.Equals("hands")) {
+				ai.maxHealth += 80;
+				ai.health += 80;
+				ai.strength += 2;
+				ai.speed -= 0.2f;
+				MockStats.hands++;
+			} else if (name.Equals("legs")) {
+				ai.maxHealth += 80;
+				ai.health += 80;
+				ai.strength -= 0.2f;
+				ai.speed += 1.0f;
+				MockStats.legs++;
+			} else if (name.Equals("brain")) {
+				ai.maxHealth += 120;
+				ai.health += 120;
+				spawner.meatSpawnFactor += 0.1f;
+				spawner.plantSpawnFactor += 0.1f;
+				MockStats.brain++;
+			} else if (name.Equals("eyes")) {
+				ai.maxHealth += 40;
+				ai.health += 40;
+				ai.meatDistance += 3;
+				ai.plantDesire -= 0.2f;
+				MockStats.eyes++;
+			} else if (name.Equals("nose")) {
+				ai.maxHealth += 40;
+				ai.health += 40;
+				ai.plantDistance += 3;
+				ai.meatDesire -= 0.2f;
+				MockStats.nose++;
+			} else if (name.Equals("liver")) {
+				MockStats.liver++;
 			}
+
 		}
 	}
 

@@ -12,10 +12,10 @@ using UnityEngine;
 public class PlayerAI : MonoBehaviour
 {
 	PATileTerrain terrain;
+	float _health;
 
 	public PlayerAI() {
 		speed = 2.0f;
-		health = 100;
 		numberOfUpgrades = 0;
 		PlantBehaviour.Points = 65;
 		PlantBehaviour.Food = 5;
@@ -28,7 +28,14 @@ public class PlayerAI : MonoBehaviour
 	}
 
 	public float points { get; set; }
-	public float health { get; set; }
+	public float health { get {
+			return _health;
+		}
+		set
+		{ 
+			_health = Mathf.Min(value, maxHealth);
+		}
+	}
 	public int numberOfUpgrades { get; set; }
 	public float speed { get; set; }
 	public float strength { get; set; }
@@ -55,8 +62,9 @@ public class PlayerAI : MonoBehaviour
 		if (go != null) terrain = go.GetComponent<PATileTerrain>();
 		plantDistance = 10;
 		meatDistance = 10;
-		strength = 1;
+		strength = 0;
 		maxHealth = 100;
+		health = 100;
 	}
 	
 	// Update is called once per frame
