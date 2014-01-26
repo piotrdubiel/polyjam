@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PanelBehaviour : MonoBehaviour {
@@ -19,8 +19,16 @@ public class PanelBehaviour : MonoBehaviour {
 	private int control_start = 60;
 	private int health;
 
-	void OnStart() {
+	public SpriteRenderer legsSprite;
+	public SpriteRenderer handSprite;
+	public SpriteRenderer brainSprite;
+	public SpriteRenderer kielSprite;
+	public SpriteRenderer siekaczSprite;
+	public SpriteRenderer watrobaSprite;
+	public SpriteRenderer noseSprite;
+	public SpriteRenderer eyesSprite;
 
+	void OnStart() {
 	}
 
 	void OnUpdate() {
@@ -74,7 +82,6 @@ public class PanelBehaviour : MonoBehaviour {
 			ai.points -= cost;
 			++ai.numberOfUpgrades;
 			//SpawnObjects spawner = this.getSpawnObjects();
-
 			if (name.Equals ("fangs")) {
 				ai.meatDesire += 1;
 				//spawner.plantSpawnFactor -= 0.04f;
@@ -82,6 +89,7 @@ public class PanelBehaviour : MonoBehaviour {
 				PlantBehaviour.Points -= 20;
 				MeatBehaviour.Food += 10;
 				MockStats.fangs++;
+				kielSprite.sprite = Resources.Load<Sprite>("Player/kiel" + MockStats.fangs);
 			} else if (name.Equals("incisors")) {
 				ai.plantDesire += 1;
 				//spawner.meatSpawnFactor -= 0.04f;
@@ -89,38 +97,45 @@ public class PanelBehaviour : MonoBehaviour {
 				MeatBehaviour.Points -= 20;
 				PlantBehaviour.Food += 6;
 				MockStats.incisors++;
+				siekaczSprite.sprite = Resources.Load<Sprite>("Player/siekacz" + MockStats.incisors);
 			} else if (name.Equals("hands")) {
 				ai.maxHealth += 80;
 				ai.health += 80;
 				ai.strength += 2;
 				ai.speed -= 0.2f;
 				MockStats.hands++;
+				handSprite.sprite = Resources.Load<Sprite>("Player/hand" + MockStats.hands);
 			} else if (name.Equals("legs")) {
 				ai.maxHealth += 80;
 				ai.health += 80;
 				ai.strength -= 0.2f;
 				ai.speed += 1.0f;
 				MockStats.legs++;
+				legsSprite.sprite = Resources.Load<Sprite>("Player/legs" + MockStats.legs);
 			} else if (name.Equals("brain")) {
 				ai.maxHealth += 120;
 				ai.health += 120;
 				//spawner.meatSpawnFactor += 0.1f;
 				//spawner.plantSpawnFactor += 0.1f;
 				MockStats.brain++;
+				brainSprite.sprite = Resources.Load<Sprite>("Player/brain" + MockStats.brain);
 			} else if (name.Equals("eyes")) {
 				ai.maxHealth += 40;
 				ai.health += 40;
 				ai.meatDistance += 3;
 				ai.plantDesire -= 0.2f;
 				MockStats.eyes++;
+				eyesSprite.sprite = Resources.Load<Sprite>("Player/eyes" + MockStats.eyes);
 			} else if (name.Equals("nose")) {
 				ai.maxHealth += 40;
 				ai.health += 40;
 				ai.plantDistance += 3;
 				ai.meatDesire -= 0.2f;
 				MockStats.nose++;
+				noseSprite.sprite = Resources.Load<Sprite>("Player/nose" + MockStats.nose);
 			} else if (name.Equals("liver")) {
 				MockStats.liver++;
+				watrobaSprite.sprite = Resources.Load<Sprite>("Player/watroba" + MockStats.liver);
 			}
 			
 			updateHealth(ai.health);
