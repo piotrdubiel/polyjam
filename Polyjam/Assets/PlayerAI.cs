@@ -16,6 +16,12 @@ public class PlayerAI : MonoBehaviour
 	float _strength;
 	float _speed;
 
+	enum State {
+		Thinking,
+		Searching,
+		Attacking
+	}
+
 	public PlayerAI() {
 		speed = 2.0f;
 		numberOfUpgrades = 0;
@@ -25,8 +31,9 @@ public class PlayerAI : MonoBehaviour
 		MeatBehaviour.Food = 10;
 		points = 100000;
 
-		meatDesire = 0.1f;
-		plantDesire = 0.1f;
+		meatDesire = 0.0f;
+		plantDesire = 0.0f;
+		alcoholTolerance = 0.0f;
 	}
 
 	public float points { get; set; }
@@ -54,6 +61,7 @@ public class PlayerAI : MonoBehaviour
 	public float maxHealth { get; set; }
 	public float plantDesire {get; set;}
 	public float meatDesire { get; set; }
+	public float alcoholDesire { get; set; }
 	public float poisoningToHealth {get; set;}
 	public float alcoholTolerance {get; set;}
 	public float poisoningFall {get; set;}
@@ -69,6 +77,9 @@ public class PlayerAI : MonoBehaviour
 	float changeInterval = 5.0f;
 
 	PanelBehaviour panel;
+
+	State state;
+	GameObject target;
 
 	// Use this for initialization
 	void Start () {
@@ -86,6 +97,7 @@ public class PlayerAI : MonoBehaviour
 		poisoning = 0;
 		poisoningFall = 1;
 		panel = (PanelBehaviour) FindObjectOfType(typeof(PanelBehaviour));
+		state = State.Searching;
 	}
 	
 	// Update is called once per frame
@@ -106,47 +118,78 @@ public class PlayerAI : MonoBehaviour
 	
 	void movePlayer() {
 		transform.localPosition += moveDirection * Time.deltaTime * this.speed;
-		timeToChangeMoveDirection -= Time.deltaTime;
 		if (terrain == null) {
 			GameObject go = GameObject.Find("Tile Map");
 			if (go != null) terrain = go.GetComponent<PATileTerrain>();
 		}
 
+		if (state == State.Searching) {
+			timeToChangeMoveDirection -= Time.deltaTime;
+			if (timeToChangeMoveDirection <= 0) {
+				changeMoveDirection ();
+			} else if (transform.localPosition.x <= 0 || transform.localPosition.x >= terrain.width ||
+				transform.localPosition.z <= 0 || transform.localPosition.z >= terrain.height) {
+				moveDirection *= -1;
+				timeToChangeMoveDirection = changeInterval;
+			}
+			this.search();
+		} else {
+			Vector3 dir = target.transform.localPosition - transform.localPosition;
+			dir.y = 0;
+			this.attackObject(target, dir.normalized, dir.sqrMagnitude);
+		}
+	}
+
+	void search() {
 		GameObject nearestPlant = this.nearestObjectWithTag("PlantBehaviour");
 		Vector3 nearestPlantDirection = new Vector3();
 		if (nearestPlant != null) {
 			nearestPlantDirection = nearestPlant.transform.localPosition - transform.localPosition;
 			nearestPlantDirection.y = 0;
+			if (nearestPlantDirection.sqrMagnitude > plantDistance * plantDistance) {
+				nearestPlant = null;
+			}
 		}
-
+		
 		GameObject nearestMeat = this.nearestObjectWithTag ("MeatBehaviour");
 		Vector3 nearestMeatDirection = new Vector3();
 		if (nearestMeat != null) {
 			nearestMeatDirection = nearestMeat.transform.localPosition - transform.localPosition;
 			nearestMeatDirection.y = 0;
+			if (nearestMeatDirection.sqrMagnitude > meatDistance * meatDistance) {
+				nearestMeat = null;
+			}
 		}
 		
-		float distanceToPlant = nearestPlantDirection.sqrMagnitude;
-		float distanceToMeat = nearestMeatDirection.sqrMagnitude;
-
-		if (nearestMeat != null && nearestPlant != null) {
-			if (meatDesire >= plantDesire) {
-				this.attackObject(nearestMeat, nearestMeatDirection.normalized, distanceToMeat);
-			} else {
-				this.attackObject(nearestPlant, nearestPlantDirection.normalized, distanceToPlant);
+		GameObject nearestAlcohol = this.nearestObjectWithTag ("AlcoholBehaviour");
+		Vector3 nearestAlcoholDirection = new Vector3();
+		if (nearestAlcohol != null) {
+			nearestAlcoholDirection = nearestAlcohol.transform.localPosition - transform.localPosition;
+			nearestAlcoholDirection.y = 0;
+			if (nearestAlcoholDirection.sqrMagnitude > 100) {
+				nearestAlcohol = null;
 			}
-		} else if (nearestPlant != null && distanceToPlant < plantDistance * plantDistance) {
-			this.attackObject(nearestPlant, nearestPlantDirection.normalized, distanceToPlant);
-		} else if (nearestMeat != null && distanceToMeat < meatDistance * meatDistance) {
-			this.attackObject(nearestMeat, nearestMeatDirection.normalized, distanceToMeat);
-		} else if (timeToChangeMoveDirection <= 0) {
-			changeMoveDirection();
-		} else if (transform.localPosition.x <= 0 || transform.localPosition.x >= terrain.width ||
-		           transform.localPosition.z <= 0 || transform.localPosition.z >= terrain.height) {
-			moveDirection *= -1;
-			timeToChangeMoveDirection = changeInterval;
 		}
 
+		float alc = nearestAlcohol != null ? alcoholDesire : 0;
+		float meat = nearestMeat != null ? meatDesire : 0;
+		float plant = nearestPlant != null ? plantDesire : 0;
+		float overallDesire = alc + meat + plant;
+		if (overallDesire > 0) {
+			float alcoholProb = alc / overallDesire;
+			float meatProb = meat / overallDesire;
+			float plantProb = plant / overallDesire;
+
+			float prob = Random.Range(0, 1000) * 0.001f;
+			if (prob < alcoholProb) {
+				target = nearestAlcohol;
+			} else if (prob < alcoholProb + meatProb) {
+				target = nearestMeat;
+			} else if (prob < overallDesire) {
+				target = nearestPlant;
+			}
+			state = State.Attacking;
+		}
 	}
 
 	GameObject nearestObjectWithTag(string name) {
@@ -202,13 +245,15 @@ public class PlayerAI : MonoBehaviour
 			this.health += MeatBehaviour.Food;
 		} else if (go.tag.Equals ("AlcoholBehaviour")) {
 			poisoning += AlcoholBehaviour.PoisonAmount;
-			speed *= AlcoholBehaviour.SpeedFactor;
-			strength *= AlcoholBehaviour.StrengthFactor;
 		}
+		state = State.Searching;
+		target = null;
 	}
 
 	void Attack(GameObject go) {
 		this.health -= MeatBehaviour.Strength;
+		this.state = State.Attacking;
+		this.target = go;
 		if (health <= 0) {
 			this.playerDead();
 		}

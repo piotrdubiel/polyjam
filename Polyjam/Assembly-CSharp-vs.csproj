@@ -60,6 +60,7 @@
      <Compile Include="Assets\PlantBehaviour.cs" />
      <Compile Include="Assets\PlayerAI.cs" />
      <Compile Include="Assets\SpawnObjects.cs" />
+     <Compile Include="Assets\StartBehaviour.cs" />
      <None Include="Assets\readme.txt" />
      <None Include="Assets\PATileTerrainDemo\Tilesets\tileset1.txt" />
      <None Include="Assets\PATileTerrain\Shaders\PATileTerrainPreview.shader" />
