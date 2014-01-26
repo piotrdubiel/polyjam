@@ -5,7 +5,8 @@ public class PanelBehaviour : MonoBehaviour {
 	private Rect viewport;
 
 	private int score = 0;
-	public Texture active_texture;
+	public Texture activeTexture;
+	public Texture[] healthTextures;
 	
 	public GUIStyle header_style;
 	public GUIStyle item_style;
@@ -16,6 +17,7 @@ public class PanelBehaviour : MonoBehaviour {
 	private int row_height = 35;
 
 	private int control_start = 60;
+	private int health;
 
 	void OnStart() {
 
@@ -38,7 +40,6 @@ public class PanelBehaviour : MonoBehaviour {
 		GUILayout.Label (score_content, header_style);
 		GUILayout.EndArea ();
 
-		button_width = (int) (camera.pixelWidth - 4 * padding - 120) / 10 - 4;
 		createStat (0, "fangs");
 		createStat (1, "incisors");
 		createStat (2, "hands");
@@ -48,14 +49,15 @@ public class PanelBehaviour : MonoBehaviour {
 		createStat (6, "nose");
 		createStat (7, "liver");
 
-		GUI.DrawTexture(new Rect(padding, camera.pixelHeight - 80 - padding, 80, 80), active_texture);
+		GUI.DrawTexture(new Rect(padding, camera.pixelHeight - 80 - padding, 80, 80), activeTexture);
+		GUI.DrawTexture(new Rect(camera.pixelWidth - 80 - padding, camera.pixelHeight - 80 - padding, 80, 80), healthTextures[health]);
 	}
 
 	private void createStat(int index, string name) {
 		int stat = MockStats.getStat (name.Normalize());
 		GUI.Label(new Rect(padding, control_start + index * row_height, 80, row_height), name, item_style);
 		for (int i = 0; i < stat; ++i) {
-			GUI.DrawTexture(new Rect(2 * padding + 80 + i * button_width, control_start + index * row_height, button_width, button_width), active_texture);
+			GUI.DrawTexture(new Rect(2 * padding + 80 + i * button_width, control_start + index * row_height, button_width, button_width), activeTexture);
 		}
 		if (stat < 10) {
 			if (GUI.Button (new Rect (2 * padding + 83 + stat * button_width, control_start + index * row_height, button_width, button_width), "+")) {
@@ -136,5 +138,10 @@ public class PanelBehaviour : MonoBehaviour {
 			return true;
 		}
 		return false;
+	}
+
+	void updateHealth(float health) {
+		print ("update Health " + health);
+		this.health = (int) health / (healthTextures.Length - 1);
 	}
 }

@@ -19,6 +19,7 @@ public class GameOverGUI : MonoBehaviour {
 			PlantBehaviour.Food = 5;
 			PlantBehaviour.Points = 100;
 			Application.LoadLevel("sample");
+
 		}
 	}
 }

@@ -53,7 +53,9 @@ public class PlayerAI : MonoBehaviour
 	float attackDistance = 1;
 	
 	float changeInterval = 5.0f;
-	
+
+	PanelBehaviour panel;
+
 	// Use this for initialization
 	void Start () {
 		moveDirection = this.randomMoveDirection ();
@@ -65,6 +67,7 @@ public class PlayerAI : MonoBehaviour
 		strength = 0;
 		maxHealth = 100;
 		health = 100;
+		panel = (PanelBehaviour) FindObjectOfType(typeof(PanelBehaviour));
 	}
 	
 	// Update is called once per frame
@@ -75,6 +78,7 @@ public class PlayerAI : MonoBehaviour
 
 	void updateHealth() {
 		health -= numberOfUpgrades * Time.deltaTime;
+		panel.SendMessage ("updateHealth", health);
 		if (health <= 0) {
 			this.SendMessage ("playerDead");
 			return;

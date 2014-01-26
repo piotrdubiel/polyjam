@@ -2,7 +2,8 @@ fileFormatVersion: 2
 guid: 374f313de52304da784519229009baf1
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - plantTexture: {fileID: 2800000, guid: 395ab19d190f64bd68c9faa1a6b1b3c6, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
