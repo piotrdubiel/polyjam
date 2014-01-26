@@ -7,6 +7,7 @@ TagManager:
   - MeatBehaviour
   - Player
   - Tile Map
+  - AlcoholBehaviour
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX

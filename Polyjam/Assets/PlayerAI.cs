@@ -13,6 +13,8 @@ public class PlayerAI : MonoBehaviour
 {
 	PATileTerrain terrain;
 	float _health;
+	float _strength;
+	float _speed;
 
 	public PlayerAI() {
 		speed = 2.0f;
@@ -37,18 +39,30 @@ public class PlayerAI : MonoBehaviour
 		}
 	}
 	public int numberOfUpgrades { get; set; }
-	public float speed { get; set; }
-	public float strength { get; set; }
+	public float speed { get {
+			return _speed + Mathf.Max(0, (poisoning - alcoholTolerance) * AlcoholBehaviour.SpeedFactor);
+		}
+		set {_speed = value;} 
+	}
+	public float strength { get {
+			return _strength + Mathf.Max(0, (poisoning - alcoholTolerance) * AlcoholBehaviour.StrengthFactor);
+		}
+		set {_strength = value;} 
+	}
 	public float plantDistance { get; set; }
 	public float meatDistance {get; set;}
 	public float maxHealth { get; set; }
 	public float plantDesire {get; set;}
 	public float meatDesire { get; set; }
+	public float poisoningToHealth {get; set;}
+	public float alcoholTolerance {get; set;}
+	public float poisoningFall {get; set;}
 
 	public Vector3 moveDirection;
 	float timeToChangeMoveDirection;
 	float timeBetweenAttacks = 1.0f;
 	float attackInitialIntercal = 1.0f;
+	float poisoning;
 
 	float attackDistance = 1;
 	
@@ -67,6 +81,10 @@ public class PlayerAI : MonoBehaviour
 		strength = 0;
 		maxHealth = 100;
 		health = 100;
+		poisoningToHealth = 0.1f;
+		alcoholTolerance = 0;
+		poisoning = 0;
+		poisoningFall = 1;
 		panel = (PanelBehaviour) FindObjectOfType(typeof(PanelBehaviour));
 	}
 	
@@ -77,7 +95,8 @@ public class PlayerAI : MonoBehaviour
 	}
 
 	void updateHealth() {
-		health -= 0.05f + numberOfUpgrades * Time.deltaTime;
+		health -= (0.05f + numberOfUpgrades * Time.deltaTime + Mathf.Max(0.0f, poisoning - alcoholTolerance) * poisoningToHealth);
+		poisoning -= poisoningFall;
 		panel.SendMessage ("updateHealth", health / maxHealth);
 		if (health <= 0) {
 			this.SendMessage ("playerDead");
@@ -124,7 +143,6 @@ public class PlayerAI : MonoBehaviour
 			changeMoveDirection();
 		} else if (transform.localPosition.x <= 0 || transform.localPosition.x >= terrain.width ||
 		           transform.localPosition.z <= 0 || transform.localPosition.z >= terrain.height) {
-			print ("out of bounds");
 			moveDirection *= -1;
 			timeToChangeMoveDirection = changeInterval;
 		}
@@ -153,6 +171,7 @@ public class PlayerAI : MonoBehaviour
 		moveDirection = direction;
 		
 		timeBetweenAttacks -= Time.deltaTime;
+
 		if (distance < attackDistance && timeBetweenAttacks <= 0) {
 			timeBetweenAttacks = attackInitialIntercal;
 			go.SendMessageUpwards ("Attack", this.gameObject);
@@ -178,11 +197,13 @@ public class PlayerAI : MonoBehaviour
 		if (go.tag.Equals ("PlantBehaviour")) {
 			this.points += PlantBehaviour.Points;
 			this.health += PlantBehaviour.Food;
-			this.health = Mathf.Min(this.health, this.maxHealth);
 		} else if (go.tag.Equals ("MeatBehaviour")) {
 			this.points += MeatBehaviour.Points;
 			this.health += MeatBehaviour.Food;
-			this.health = Mathf.Min(this.health, this.maxHealth);
+		} else if (go.tag.Equals ("AlcoholBehaviour")) {
+			poisoning += AlcoholBehaviour.PoisonAmount;
+			speed *= AlcoholBehaviour.SpeedFactor;
+			strength *= AlcoholBehaviour.StrengthFactor;
 		}
 	}
 

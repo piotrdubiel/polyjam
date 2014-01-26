@@ -12,6 +12,7 @@ public class MeatBehaviour : FoodBehaviour
 	PATileTerrain terrain;
 	Vector3 moveDirection;
 	float timeToChangeMoveDirection;
+	float timeBetweenAttacks;
 	
 	float changeInterval = 5.0f;
 	// Use this for initialization
@@ -22,6 +23,7 @@ public class MeatBehaviour : FoodBehaviour
 		GameObject go = GameObject.Find("Tile Map");
 		if (go != null) terrain = go.GetComponent<PATileTerrain>();
 		this.renderer.material.color = Color.red;
+		timeBetweenAttacks = 0.0f;
 	}
 	
 	// Update is called once per frame
@@ -37,18 +39,24 @@ public class MeatBehaviour : FoodBehaviour
 		Vector3 direction = ai.transform.localPosition - transform.localPosition;
 
 		if (direction.sqrMagnitude <= MeatBehaviour.SightDistance * MeatBehaviour.SightDistance) {
-			timeToChangeMoveDirection = changeInterval;
-			moveDirection = direction.normalized;
-			if (direction.sqrMagnitude <= 1) {
-				ai.SendMessageUpwards("Attack", this.gameObject);
-			}
+			this.attackObject(ai.gameObject, direction.normalized, direction.sqrMagnitude);
 		} else if (timeToChangeMoveDirection <= 0) {
 			changeMoveDirection();
 		} else if (transform.localPosition.x <= 0 || transform.localPosition.x >= terrain.width ||
 		           transform.localPosition.z <= 0 || transform.localPosition.z >= terrain.height) {
-			print ("out of bounds");
 			moveDirection *= -1;
 			timeToChangeMoveDirection = changeInterval;
+		}
+	}
+
+	void attackObject (GameObject go, Vector3 direction, float distance) {
+		timeToChangeMoveDirection = changeInterval;
+		moveDirection = direction;
+		
+		timeBetweenAttacks -= Time.deltaTime;
+		if (distance < 1 && timeBetweenAttacks <= 0) {
+			timeBetweenAttacks = 1.0f;
+			go.SendMessageUpwards ("Attack", this.gameObject);
 		}
 	}
 	

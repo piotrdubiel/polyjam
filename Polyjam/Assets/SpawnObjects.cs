@@ -10,13 +10,13 @@ public class SpawnObjects : MonoBehaviour {
 	float _meatSpawnFactor;
 	float _alcoholSpawnFactor;
 
-	public float plantSpawnFactor { get {return _plantSpawnFactor;} set{_plantSpawnFactor = Mathf.Max(0, _plantSpawnFactor);} }
+	public float plantSpawnFactor { get {return _plantSpawnFactor;} set{_plantSpawnFactor = Mathf.Max(0, value);} }
 	float timeToSpawnPlant;
 
-	public float meatSpawnFactor { get {return _meatSpawnFactor;} set{_meatSpawnFactor = Mathf.Max(0, _meatSpawnFactor);} }
+	public float meatSpawnFactor { get {return _meatSpawnFactor;} set{_meatSpawnFactor = Mathf.Max(0, value);} }
 	float timeToSpawnMeat;
 
-	public float alcoholSpawnFactor { get {return _alcoholSpawnFactor;} set{_alcoholSpawnFactor = Mathf.Max(0, _alcoholSpawnFactor);} }
+	public float alcoholSpawnFactor { get {return _alcoholSpawnFactor;} set{_alcoholSpawnFactor = Mathf.Max(0, value);} }
 	float timeToSpawnAlcohol;
 	// Use this for initialization
 	void Start () {
@@ -26,7 +26,7 @@ public class SpawnObjects : MonoBehaviour {
 		MeatBehaviour.SightDistance = 10;
 		timeToSpawnMeat = initialTimeToSpawn;
 		timeToSpawnPlant = initialTimeToSpawn;
-		_alcoholSpawnFactor = initialTimeToSpawn;
+		timeToSpawnAlcohol = initialTimeToSpawn;
 		GameObject go = GameObject.Find("Tile Map");
 		if (go != null) terrain = go.GetComponent<PATileTerrain>();
 		plantSpawnFactor = 0.2f;
@@ -38,6 +38,7 @@ public class SpawnObjects : MonoBehaviour {
 	void Update () {
 		this.tryToSpawnPlant();
 		this.tryToSpawnMeat ();
+		this.tryToSpawnAlcohol ();
 	}
 
 	void tryToSpawnMeat() {
@@ -58,6 +59,17 @@ public class SpawnObjects : MonoBehaviour {
 			timeToSpawnPlant = initialTimeToSpawn;
 			if (random <= plantSpawnFactor) {
 				this.spawnObjectWithBehaviour("PlantBehaviour");
+			}
+		}
+	}
+
+	void tryToSpawnAlcohol() {
+		float random = Random.Range (0, 1000) * 0.001f;
+		timeToSpawnAlcohol -= Time.deltaTime;
+		if (timeToSpawnAlcohol <= 0) {
+			timeToSpawnAlcohol = initialTimeToSpawn;
+			if (random <= alcoholSpawnFactor) {
+				this.spawnObjectWithBehaviour("AlcoholBehaviour");
 			}
 		}
 	}
