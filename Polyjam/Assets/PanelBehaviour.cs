@@ -84,6 +84,9 @@ public class PanelBehaviour : MonoBehaviour {
 			ai.points -= cost;
 			++ai.numberOfUpgrades;
 			SpawnObjects spawner = this.getSpawnObjects();
+			MeatBehaviour.SightDistance *= 1.05;
+			MeatBehaviour.Speed *= 1.05;
+			MeatBehaviour.Strength *= 1.05;
 			if (name.Equals ("fangs")) {
 				ai.meatDesire += 1;
 				spawner.plantSpawnFactor -= 0.04f;

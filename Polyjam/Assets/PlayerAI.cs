@@ -185,6 +185,13 @@ public class PlayerAI : MonoBehaviour
 			this.health = Mathf.Min(this.health, this.maxHealth);
 		}
 	}
+
+	void Attack(GameObject go) {
+		this.health -= MeatBehaviour.Strength;
+		if (health <= 0) {
+			this.playerDead();
+		}
+	}
 }
 
 

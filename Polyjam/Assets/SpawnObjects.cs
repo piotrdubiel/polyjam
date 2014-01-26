@@ -14,6 +14,10 @@ public class SpawnObjects : MonoBehaviour {
 	float timeToSpawnMeat;
 	// Use this for initialization
 	void Start () {
+		MeatBehaviour.InitialHealth = 5;
+		MeatBehaviour.Speed = 2;
+		MeatBehaviour.Strength = 1;
+		MeatBehaviour.SightDistance = 10;
 		timeToSpawnMeat = initialTimeToSpawn;
 		timeToSpawnPlant = initialTimeToSpawn;
 		GameObject go = GameObject.Find("Tile Map");
